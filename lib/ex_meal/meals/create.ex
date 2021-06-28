@@ -2,7 +2,7 @@ defmodule ExMeal.Meals.Create do
   @moduledoc """
   Inserts a meal into the database.
   """
-  alias ExMeal.Repo
+  alias ExMeal.{Error, Repo}
   alias ExMeal.Meals.Meal
 
   @typedoc """
@@ -19,19 +19,28 @@ defmodule ExMeal.Meals.Create do
 
   ## Examples
 
-        iex> params = %{calories: "100 kcal", date: ~N[2016-04-16 13:30:15], description: "1 Ovo"}
+        iex> params = %{calories: "100 kcal", date: "2016-04-16 13:30:15", description: "1 Ovo"}
 
         iex> ExMeal.Meals.Create.call(params)
         {:ok, %Meal{}}
 
         iex> ExMeal.Meals.Create.call(%{})
-        {:error, %Ecto.Changeset{}}
+        %ExMeal.Error{result: %Ecto.Changeset{}, status: :bad_request}
 
   """
-  @spec call(params()) :: {:ok, Meal.t()} | {:error, Ecto.Changeset.t()}
+  @spec call(params()) ::
+          {:ok, Meal.t()}
+          | {:error, %Error{result: Ecto.Changeset.t(), status: :bad_request}}
   def call(params) do
     params
     |> Meal.changeset()
     |> Repo.insert()
+    |> handle_insert()
+  end
+
+  defp handle_insert({:ok, %Meal{}} = result), do: result
+
+  defp handle_insert({:error, %Ecto.Changeset{} = changeset}) do
+    %Error{result: changeset, status: :bad_request}
   end
 end

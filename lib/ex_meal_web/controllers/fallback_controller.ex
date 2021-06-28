@@ -1,12 +1,13 @@
 defmodule ExMealWeb.FallbackController do
   use ExMealWeb, :controller
 
+  alias ExMeal.Error
   alias ExMealWeb.ErrorView
 
-  def call(conn, {:error, error = error}) do
+  def call(conn, %Error{result: changeset_or_message, status: status}) do
     conn
-    |> put_status(:bad_request)
+    |> put_status(status)
     |> put_view(ErrorView)
-    |> render("error.json", error: error)
+    |> render("error.json", result: changeset_or_message)
   end
 end

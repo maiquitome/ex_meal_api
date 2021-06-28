@@ -18,11 +18,11 @@ defmodule ExMealWeb.ErrorView do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
 
-  def render("error.json", %{error: %Changeset{} = changeset}) do
+  def render("error.json", %{result: %Changeset{} = changeset}) do
     %{message: translate_errors(changeset)}
   end
 
-  def render("error.json", error_message) do
+  def render("error.json", %{result: error_message}) do
     %{message: error_message}
   end
 
