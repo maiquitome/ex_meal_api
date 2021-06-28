@@ -2,6 +2,14 @@ defmodule ExMeal.Meals.Meal do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder,
+           only: [
+             :id,
+             :calories,
+             :date,
+             :description
+           ]}
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "meals" do
@@ -10,6 +18,11 @@ defmodule ExMeal.Meals.Meal do
     field :description, :string
 
     timestamps()
+  end
+
+  @doc false
+  def changeset(attrs) do
+    changeset(%__MODULE__{}, attrs)
   end
 
   @doc false
