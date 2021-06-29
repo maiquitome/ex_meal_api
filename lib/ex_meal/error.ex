@@ -20,4 +20,7 @@ defmodule ExMeal.Error do
       status: status
     }
   end
+
+  @spec build_meal_not_found_error :: %__MODULE__{result: String.t(), status: :not_found}
+  def build_meal_not_found_error, do: build(:not_found, "Meal not found!")
 end

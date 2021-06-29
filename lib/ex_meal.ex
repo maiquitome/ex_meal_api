@@ -9,6 +9,7 @@ defmodule ExMeal do
   alias ExMeal.Error
   alias ExMeal.Meals.Meal
   alias ExMeal.Meals.Create, as: CreateMeal
+  alias ExMeal.Meals.Get, as: GetMeal
 
   @typedoc """
   Meal params.
@@ -39,4 +40,22 @@ defmodule ExMeal do
   defdelegate create_meal(meal_params),
     to: CreateMeal,
     as: :call
+
+  @doc """
+  Gets a meal from the database.
+
+  ## Examples
+
+      iex> ExMeal.get_meal_by_id("aba9fe82-77bd-4c9c-b28f-a09085d2a24b")
+      {:ok, %ExMeal.Meals.Meal{}}
+
+      iex> ExMeal.get_meal_by_id("aba9fe82-77bd-4c9c-b28f-a09085d2a24a")
+      {:error, %Error{result: "Meal not found.", status: :not_found}}
+
+  """
+  @spec get_meal_by_id(Ecto.UUID) ::
+          {:ok, %Meal{}} | {:error, %Error{result: String.t(), status: :not_found}}
+  defdelegate get_meal_by_id(meal_id),
+    to: GetMeal,
+    as: :by_id
 end

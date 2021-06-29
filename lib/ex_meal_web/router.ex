@@ -11,6 +11,7 @@ defmodule ExMealWeb.Router do
   scope "/api", ExMealWeb do
     pipe_through :api
 
+    get "/meals/:id", MealController, :show
     post "/meals", MealController, :create
   end
 
