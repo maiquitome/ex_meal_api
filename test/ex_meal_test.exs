@@ -32,18 +32,19 @@ defmodule ExMealTest do
 
       response = ExMeal.create_meal(params)
 
-      assert %Error{
-               result: %Ecto.Changeset{
-                 action: :insert,
-                 changes: %{},
-                 errors: [
-                   description: {"can't be blank", [validation: :required]},
-                   date: {"can't be blank", [validation: :required]},
-                   calories: {"can't be blank", [validation: :required]}
-                 ]
-               },
-               status: :bad_request
-             } = response
+      assert {:error,
+              %Error{
+                result: %Ecto.Changeset{
+                  action: :insert,
+                  changes: %{},
+                  errors: [
+                    description: {"can't be blank", [validation: :required]},
+                    date: {"can't be blank", [validation: :required]},
+                    calories: {"can't be blank", [validation: :required]}
+                  ]
+                },
+                status: :bad_request
+              }} = response
     end
   end
 end
