@@ -7,14 +7,14 @@ defmodule ExMeal.Error do
 
   defstruct [:result, :status]
 
-  @spec build(atom, String.t() | Ecto.Changeset.t()) :: %__MODULE__{
+  @spec build(String.t() | Ecto.Changeset.t(), atom) :: %__MODULE__{
           result: String.t() | Ecto.Changeset.t(),
           status: atom
         }
   @doc """
   Build an error struct.
   """
-  def build(status, result) do
+  def build(result, status) do
     %__MODULE__{
       result: result,
       status: status
@@ -22,5 +22,5 @@ defmodule ExMeal.Error do
   end
 
   @spec build_meal_not_found_error :: %__MODULE__{result: String.t(), status: :not_found}
-  def build_meal_not_found_error, do: build(:not_found, "Meal not found!")
+  def build_meal_not_found_error, do: build("Meal not found!", :not_found)
 end
