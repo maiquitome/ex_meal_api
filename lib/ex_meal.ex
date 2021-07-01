@@ -11,6 +11,7 @@ defmodule ExMeal do
   alias ExMeal.Meals.Delete, as: DeleteMeal
   alias ExMeal.Meals.Get, as: GetMeal
   alias ExMeal.Meals.Meal
+  alias ExMeal.Meals.Update, as: UpdateMeal
 
   @typedoc """
   Meal params.
@@ -78,5 +79,32 @@ defmodule ExMeal do
           | {:ok, Meal.t()}
   defdelegate delete_meal(meal_id),
     to: DeleteMeal,
+    as: :call
+
+  @doc """
+  Updates a meal in the database.
+
+  ## Examples
+
+      iex> meal_id = "8aa2e580-7726-49ee-8f83-3c86d79d4a08"
+
+      iex> params = %{calories: "200 kcal", date: "2016-05-16 13:30:15", description: "2 Ovos"}
+
+      iex> ExMeal.update_meal(meal_id, params)
+      {:ok, %ExMeal.Meals.Meal{}}
+
+      iex> ExMeal.update_meal("8aa2e580-7726-49ee-8f83-3c86d79d4a00", params)
+      {:error, %ExMeal.Error{result: "Meal not found!", status: :not_found}}
+
+      iex> ExMeal.update_meal(meal_id, %{calories: "", date: "", description: ""})
+      {:error, %Error{result: %Ecto.Changeset{}, status: :bad_request}}
+
+  """
+  @spec update_meal(Ecto.UUID, meal_params()) ::
+          {:error, %Error{result: String.t(), status: :not_found}}
+          | {:error, %Error{result: Ecto.Changeset.t(), status: :bad_request}}
+          | {:ok, Meal.t()}
+  defdelegate update_meal(meal_id, meal_params),
+    to: UpdateMeal,
     as: :call
 end

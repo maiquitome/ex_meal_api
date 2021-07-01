@@ -28,4 +28,12 @@ defmodule ExMealWeb.MealController do
       |> text("")
     end
   end
+
+  def update(conn, %{"id" => id} = params) do
+    with {:ok, %Meal{} = meal} <- ExMeal.update_meal(id, params) do
+      conn
+      |> put_status(:ok)
+      |> render("update.json", meal: meal)
+    end
+  end
 end

@@ -13,6 +13,7 @@ defmodule ExMealWeb.Router do
 
     get "/meals/:id", MealController, :show
     post "/meals", MealController, :create
+    put "/meals/:id", MealController, :update
     delete "/meals/:id", MealController, :delete
   end
 

@@ -10,6 +10,13 @@ defmodule ExMealWeb.MealView do
     }
   end
 
+  def render("update.json", %{meal: %Meal{} = meal}) do
+    %{
+      message: "Meal successfully updated!",
+      meal: meal
+    }
+  end
+
   def render("meal.json", %{meal: %Meal{} = meal}) do
     %{
       meal: meal
