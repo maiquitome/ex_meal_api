@@ -7,9 +7,10 @@ defmodule ExMeal do
   if it comes from the database, an external API or others.
   """
   alias ExMeal.Error
-  alias ExMeal.Meals.Meal
   alias ExMeal.Meals.Create, as: CreateMeal
+  alias ExMeal.Meals.Delete, as: DeleteMeal
   alias ExMeal.Meals.Get, as: GetMeal
+  alias ExMeal.Meals.Meal
 
   @typedoc """
   Meal params.
@@ -58,4 +59,24 @@ defmodule ExMeal do
   defdelegate get_meal_by_id(meal_id),
     to: GetMeal,
     as: :by_id
+
+  @doc """
+  Delete a meal from the database.
+
+  ## Examples
+
+      iex> ExMeal.delete_meal("867a7df1-4461-4f87-8f33-f0c299ac56df")
+      {:ok, %ExMeal.Meals.Meal{}}
+
+      iex> ExMeal.delete_meal("867a7df1-4461-4f87-8f33-f0c299ac56da")
+      {:error, %ExMeal.Error{result: "Meal not found!", status: :not_found}}
+
+  """
+  @spec delete_meal(Ecto.UUID) ::
+          {:error, %Error{result: String.t(), status: :not_found}}
+          | {:error, %Error{result: Ecto.Changeset.t(), status: :bad_request}}
+          | {:ok, Meal.t()}
+  defdelegate delete_meal(meal_id),
+    to: DeleteMeal,
+    as: :call
 end
