@@ -48,7 +48,7 @@ defmodule ExMealTest do
     end
   end
 
-  describe "get/1" do
+  describe "get_meal_by_id/1" do
     test "when there is an user with the given id, returns the meal from the database." do
       %Meal{id: id} = insert(:meal)
 
