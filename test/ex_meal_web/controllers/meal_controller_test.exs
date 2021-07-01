@@ -107,4 +107,73 @@ defmodule ExMealWeb.MealControllerTest do
       assert response == expected_response
     end
   end
+
+  describe "update/2" do
+    test "When all params are valid and there is a user with the given ID, updates the user", %{
+      conn: conn
+    } do
+      %Meal{id: id} = insert(:meal)
+
+      params = %{
+        "calories" => "200 kcal",
+        "date" => "2016-05-10 12:20:10",
+        "description" => "2 Ovos"
+      }
+
+      response =
+        conn
+        |> put(Routes.meal_path(conn, :update, id, params))
+        |> json_response(:ok)
+
+      assert %{
+               "meal" => %{
+                 "calories" => "200 kcal",
+                 "date" => "2016-05-10T12:20:10",
+                 "description" => "2 Ovos",
+                 "id" => "84dc958f-4e96-4b1f-b164-ea0ba4a2a0e8"
+               },
+               "message" => "Meal successfully updated!"
+             } = response
+    end
+
+    test "When there is no a user with the given ID, returns an error", %{conn: conn} do
+      id = "1e459e18-5847-4832-8aeb-4c29a869b7be"
+
+      params = %{
+        "calories" => "200 kcal",
+        "date" => "2016-05-10 12:20:10",
+        "description" => "2 Ovos"
+      }
+
+      response =
+        conn
+        |> put(Routes.meal_path(conn, :update, id, params))
+        |> json_response(:not_found)
+
+      assert %{"message" => "Meal not found!"} = response
+    end
+
+    test "When some param is invalid, returns an error", %{conn: conn} do
+      %Meal{id: id} = insert(:meal)
+
+      params = %{
+        "calories" => "",
+        "date" => "",
+        "description" => ""
+      }
+
+      response =
+        conn
+        |> put(Routes.meal_path(conn, :update, id, params))
+        |> json_response(:bad_request)
+
+      assert %{
+               "message" => %{
+                 "calories" => ["can't be blank"],
+                 "date" => ["can't be blank"],
+                 "description" => ["can't be blank"]
+               }
+             } = response
+    end
+  end
 end
