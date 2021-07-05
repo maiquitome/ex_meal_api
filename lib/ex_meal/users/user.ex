@@ -19,5 +19,6 @@ defmodule ExMeal.Users.User do
     user
     |> cast(attrs, [:name, :cpf, :email])
     |> validate_required([:name, :cpf, :email])
+    |> validate_format(:email, ~r/@/)
   end
 end
