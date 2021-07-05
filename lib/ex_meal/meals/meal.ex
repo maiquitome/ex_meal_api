@@ -17,6 +17,8 @@ defmodule ExMeal.Meals.Meal do
     field :date, :naive_datetime
     field :description, :string
 
+    belongs_to :user, ExMeal.Users.User
+
     timestamps()
   end
 
