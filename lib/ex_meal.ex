@@ -7,11 +7,14 @@ defmodule ExMeal do
   if it comes from the database, an external API or others.
   """
   alias ExMeal.Error
+
   alias ExMeal.Meals.Create, as: CreateMeal
   alias ExMeal.Meals.Delete, as: DeleteMeal
   alias ExMeal.Meals.Get, as: GetMeal
   alias ExMeal.Meals.Meal
   alias ExMeal.Meals.Update, as: UpdateMeal
+
+  alias ExMeal.Users.Create, as: CreateUser
 
   @typedoc """
   Meal params.
@@ -106,5 +109,45 @@ defmodule ExMeal do
           | {:ok, Meal.t()}
   defdelegate update_meal(meal_id, meal_params),
     to: UpdateMeal,
+    as: :call
+
+  ################
+  #
+  # USERS
+  #
+  ################
+
+  @typedoc """
+  User params.
+  """
+  @type user_params :: %{
+          cpf: String.t(),
+          email: String.t(),
+          name: String.t()
+        }
+
+  @doc """
+  Inserts a user into the database.
+
+  ## Examples
+
+      iex> params = %{
+        cpf: "001.324.030-23",
+        email: "maiqui@email.com",
+        name: "Maiqui Pirolli Tomé"
+      }
+
+      iex> ExMeal.create_user(params)
+      {:ok, %ExMeal.Users.User{}}
+
+      iex> ExMeal.create_user(%{})
+      {:error, %ExMeal.Error{result: %Ecto.Changeset{}, status: :bad_request}}
+
+  """
+  @spec create_user(user_params()) ::
+          {:error, %Error{result: Ecto.Changeset.t(), status: :bad_request}}
+          | {:ok, User.t()}
+  defdelegate create_user(params),
+    to: CreateUser,
     as: :call
 end
