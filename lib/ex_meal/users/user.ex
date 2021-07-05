@@ -9,7 +9,7 @@ defmodule ExMeal.Users.User do
     field :email, :string
     field :name, :string
 
-    has_one :meal, ExMeal.Meals.Meal
+    has_many :meals, ExMeal.Meals.Meal
 
     timestamps()
   end
