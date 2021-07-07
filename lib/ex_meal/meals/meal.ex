@@ -7,7 +7,8 @@ defmodule ExMeal.Meals.Meal do
              :id,
              :calories,
              :date,
-             :description
+             :description,
+             :user_id
            ]}
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -30,7 +31,7 @@ defmodule ExMeal.Meals.Meal do
   @doc false
   def changeset(meal, attrs) do
     meal
-    |> cast(attrs, [:description, :date, :calories])
-    |> validate_required([:description, :date, :calories])
+    |> cast(attrs, [:description, :date, :calories, :user_id])
+    |> validate_required([:description, :date, :calories, :user_id])
   end
 end
