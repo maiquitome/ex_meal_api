@@ -15,6 +15,7 @@ defmodule ExMeal do
   alias ExMeal.Meals.Update, as: UpdateMeal
 
   alias ExMeal.Users.Create, as: CreateUser
+  alias ExMeal.Users.Get, as: GetUser
 
   @typedoc """
   Meal params.
@@ -150,4 +151,23 @@ defmodule ExMeal do
   defdelegate create_user(params),
     to: CreateUser,
     as: :call
+
+  @doc """
+  Returns a user from the database.
+
+  ## Examples
+
+      iex> ExMeal.get_user_by_id "e79b23ae-5813-4ec3-9976-99493905f5e8"
+      {:ok, %ExMeal.Users.User{}}
+
+      iex> ExMeal.get_user_by_id "e79b23ae-5813-4ec3-9976-99493905f5e9"
+      {:error, %ExMeal.Error{result: "User not found!", status: :not_found}}
+
+  """
+  @spec get_user_by_id(Ecto.UUID) ::
+          {:ok, Usert.t()}
+          | {:error, %Error{result: String.t(), status: :not_found}}
+  defdelegate get_user_by_id(id),
+    to: GetUser,
+    as: :by_id
 end
