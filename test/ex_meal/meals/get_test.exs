@@ -3,11 +3,14 @@ defmodule ExMeal.Meals.GetTest do
 
   import ExMeal.Factory
 
-  alias ExMeal.Meals.{Get, Meal}
   alias ExMeal.Error
+  alias ExMeal.Meals.{Get, Meal}
+  alias ExMeal.Users.User
 
   describe "get/1" do
     test "when there is an user with the given id, returns the meal from the database." do
+      %User{} = insert(:user)
+
       %Meal{id: id} = insert(:meal)
 
       response = Get.by_id(id)

@@ -4,9 +4,12 @@ defmodule ExMealWeb.MealControllerTest do
   import ExMeal.Factory
 
   alias ExMeal.Meals.Meal
+  alias ExMeal.Users.User
 
   describe "create/2" do
     test "when all params are valid, inserts a meal into the database.", %{conn: conn} do
+      %User{} = insert(:user)
+
       params = build(:meal_params)
 
       response =
@@ -51,6 +54,8 @@ defmodule ExMealWeb.MealControllerTest do
     test "when there is an user with the given id, returns the meal from the database.", %{
       conn: conn
     } do
+      %User{} = insert(:user)
+
       %Meal{id: id} = insert(:meal)
 
       response =
@@ -82,6 +87,8 @@ defmodule ExMealWeb.MealControllerTest do
 
   describe "delete/2" do
     test "When there is a user with the given ID, deletes the user.", %{conn: conn} do
+      %User{} = insert(:user)
+
       %Meal{id: id} = insert(:meal)
 
       response =
@@ -112,6 +119,8 @@ defmodule ExMealWeb.MealControllerTest do
     test "When all params are valid and there is a user with the given ID, updates the user", %{
       conn: conn
     } do
+      %User{} = insert(:user)
+
       %Meal{id: id} = insert(:meal)
 
       params = %{
@@ -154,6 +163,8 @@ defmodule ExMealWeb.MealControllerTest do
     end
 
     test "When some param is invalid, returns an error", %{conn: conn} do
+      %User{} = insert(:user)
+
       %Meal{id: id} = insert(:meal)
 
       params = %{

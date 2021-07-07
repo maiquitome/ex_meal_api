@@ -3,18 +3,22 @@ defmodule ExMeal.Meals.UpdateTest do
 
   import ExMeal.Factory
 
-  alias ExMeal.Meals.{Update, Meal}
   alias ExMeal.Error
+  alias ExMeal.Meals.{Update, Meal}
+  alias ExMeal.Users.User
 
   describe "call/2" do
     test "When all params are valid and there is a user with the given ID, updates the user" do
+      %User{} = insert(:user)
+
       %Meal{id: id} = insert(:meal)
 
-      params = %{
-        calories: "200 kcal",
-        date: "2016-05-10 12:20:10",
-        description: "2 Ovos"
-      }
+      params =
+        build(:meal_params,
+          calories: "200 kcal",
+          date: "2016-05-10 12:20:10",
+          description: "2 Ovos"
+        )
 
       response = Update.call(id, params)
 
@@ -44,6 +48,8 @@ defmodule ExMeal.Meals.UpdateTest do
     end
 
     test "When some param is invalid, returns an error" do
+      %User{} = insert(:user)
+
       %Meal{id: id} = insert(:meal)
 
       params = %{

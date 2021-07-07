@@ -8,6 +8,8 @@ defmodule ExMeal.Meals.CreateTest do
 
   describe "call/1" do
     test "when all params are valid, inserts a meal into the database." do
+      insert(:user)
+
       params = build(:meal_params)
 
       response = Create.call(params)
@@ -27,7 +29,8 @@ defmodule ExMeal.Meals.CreateTest do
       params = %{
         calories: "",
         date: "",
-        description: ""
+        description: "",
+        user_id: ""
       }
 
       response = Create.call(params)
@@ -40,7 +43,8 @@ defmodule ExMeal.Meals.CreateTest do
                   errors: [
                     description: {"can't be blank", [validation: :required]},
                     date: {"can't be blank", [validation: :required]},
-                    calories: {"can't be blank", [validation: :required]}
+                    calories: {"can't be blank", [validation: :required]},
+                    user_id: {"can't be blank", [validation: :required]}
                   ]
                 },
                 status: :bad_request

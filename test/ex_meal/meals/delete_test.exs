@@ -3,11 +3,14 @@ defmodule ExMeal.Meals.DeleteTest do
 
   import ExMeal.Factory
 
-  alias ExMeal.Meals.{Delete, Meal}
   alias ExMeal.Error
+  alias ExMeal.Meals.{Delete, Meal}
+  alias ExMeal.Users.User
 
   describe "call/1" do
     test "When there is a user with the given ID, deletes the user." do
+      %User{} = insert(:user)
+
       %Meal{id: id} = insert(:meal)
 
       response = Delete.call(id)
