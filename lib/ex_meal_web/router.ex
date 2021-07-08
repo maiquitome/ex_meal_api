@@ -17,6 +17,7 @@ defmodule ExMealWeb.Router do
     delete "/meals/:id", MealController, :delete
 
     post "/users", UserController, :create
+    get "/users/:id", UserController, :show
   end
 
   # Enables LiveDashboard only for development
