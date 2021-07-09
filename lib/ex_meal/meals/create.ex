@@ -5,10 +5,8 @@ defmodule ExMeal.Meals.Create do
   alias ExMeal.{Error, Repo}
   alias ExMeal.Meals.Meal
 
-  @typedoc """
-  Meal params.
-  """
   @type params :: %{
+          user_id: Ecto.UUID,
           calories: String.t(),
           date: Calendar.naive_datetime(),
           description: String.t()
@@ -19,7 +17,12 @@ defmodule ExMeal.Meals.Create do
 
   ## Examples
 
-        iex> params = %{calories: "100 kcal", date: "2016-04-16 13:30:15", description: "1 Ovo"}
+        iex> params = %{
+          user_id: "e79b23ae-5813-4ec3-9976-99493905f5e8",
+          calories: "100 kcal",
+          date: "2016-04-16 13:30:15",
+          description: "1 Ovo"
+        }
 
         iex> ExMeal.Meals.Create.call(params)
         {:ok, %Meal{}}
