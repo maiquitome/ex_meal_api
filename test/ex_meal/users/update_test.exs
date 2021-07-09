@@ -55,19 +55,20 @@ defmodule ExMeal.Users.UpdateTest do
 
       response = Update.call(id, params)
 
-      assert %Error{
-               result: %Ecto.Changeset{
-                 action: :update,
-                 changes: %{},
-                 errors: [
-                   name: {"can't be blank", [validation: :required]},
-                   cpf: {"can't be blank", [validation: :required]},
-                   email: {"can't be blank", [validation: :required]}
-                 ],
-                 valid?: false
-               },
-               status: :bad_request
-             } = response
+      assert {:error,
+              %Error{
+                result: %Ecto.Changeset{
+                  action: :update,
+                  changes: %{},
+                  errors: [
+                    name: {"can't be blank", [validation: :required]},
+                    cpf: {"can't be blank", [validation: :required]},
+                    email: {"can't be blank", [validation: :required]}
+                  ],
+                  valid?: false
+                },
+                status: :bad_request
+              }} = response
     end
   end
 end
