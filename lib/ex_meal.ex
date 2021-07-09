@@ -17,6 +17,7 @@ defmodule ExMeal do
   alias ExMeal.Users.Create, as: CreateUser
   alias ExMeal.Users.Get, as: GetUser
   alias ExMeal.Users.Delete, as: DeleteUser
+  alias ExMeal.Users.Update, as: UpdateUser
 
   @typedoc """
   Meal params.
@@ -193,5 +194,36 @@ defmodule ExMeal do
           | {:ok, User.t()}
   defdelegate delete_user(id),
     to: DeleteUser,
+    as: :call
+
+  @doc """
+  Updates a user in the database.
+
+  ## Examples
+
+        iex> id = "f5be7320-50e6-4ee8-8d0c-db79d3668393"
+
+        iex> params = %{
+          cpf: "001.324.030-23",
+          email: "maiqui@email.com",
+          name: "Mike Pirolli Tomé"
+        }
+
+        iex> ExMeal.update_user id, params
+        {:ok, %ExMeal.Users.User{}}
+
+        iex> ExMeal.update_user "f5be7320-50e6-4ee8-8d0c-db79d3668391", params
+        {:error, %ExMeal.Error{result: "User not found!", status: :not_found}}
+
+  """
+  @spec update_user(Ecto.UUID, user_params()) ::
+          {:error,
+           %Error{
+             result: String.t() | Ecto.Changeset.t(),
+             status: :not_found | :bad_request
+           }}
+          | {:ok, User.t()}
+  defdelegate update_user(id, params),
+    to: UpdateUser,
     as: :call
 end
