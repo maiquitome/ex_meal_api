@@ -109,4 +109,73 @@ defmodule ExMealWeb.UserControllerTest do
       assert response == expected_response
     end
   end
+
+  describe "update/2" do
+    test "When all params are valid and there is a user with the given ID, updates the user", %{
+      conn: conn
+    } do
+      %User{id: id} = insert(:user)
+
+      params = %{
+        "cpf" => "111.222.333-44",
+        "email" => "mike@monstros.com",
+        "name" => "Mike Wazowski"
+      }
+
+      response =
+        conn
+        |> put(Routes.user_path(conn, :update, id, params))
+        |> json_response(:ok)
+
+      assert %{
+               "message" => "User successfully updated!",
+               "user" => %{
+                 "cpf" => "111.222.333-44",
+                 "email" => "mike@monstros.com",
+                 "id" => "a0694167-d1c7-45a7-a1db-7f1e60e1275d",
+                 "name" => "Mike Wazowski"
+               }
+             } = response
+    end
+
+    test "When there is no a user with the given ID, returns an error", %{conn: conn} do
+      id = "1e459e18-5847-4832-8aeb-4c29a869b7be"
+
+      params = %{
+        "cpf" => "111.222.333-44",
+        "email" => "mike@monstros.com",
+        "name" => "Mike Wazowski"
+      }
+
+      response =
+        conn
+        |> put(Routes.user_path(conn, :update, id, params))
+        |> json_response(:not_found)
+
+      assert %{"message" => "User not found!"} = response
+    end
+
+    test "When some param is invalid, returns an error", %{conn: conn} do
+      %User{id: id} = insert(:user)
+
+      params = %{
+        "cpf" => "",
+        "email" => "",
+        "name" => ""
+      }
+
+      response =
+        conn
+        |> put(Routes.user_path(conn, :update, id, params))
+        |> json_response(:bad_request)
+
+      assert %{
+               "message" => %{
+                 "cpf" => ["can't be blank"],
+                 "email" => ["can't be blank"],
+                 "name" => ["can't be blank"]
+               }
+             } = response
+    end
+  end
 end

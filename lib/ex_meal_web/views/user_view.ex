@@ -13,4 +13,11 @@ defmodule ExMealWeb.UserView do
   def render("user.json", %{user: %User{} = user}) do
     %{user: user}
   end
+
+  def render("update.json", %{user: %User{} = user}) do
+    %{
+      message: "User successfully updated!",
+      user: user
+    }
+  end
 end
