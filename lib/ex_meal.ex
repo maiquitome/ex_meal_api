@@ -16,6 +16,7 @@ defmodule ExMeal do
 
   alias ExMeal.Users.Create, as: CreateUser
   alias ExMeal.Users.Get, as: GetUser
+  alias ExMeal.Users.Delete, as: DeleteUser
 
   @typedoc """
   Meal params.
@@ -170,4 +171,27 @@ defmodule ExMeal do
   defdelegate get_user_by_id(id),
     to: GetUser,
     as: :by_id
+
+  @doc """
+  Delete a user from the database.
+
+  ## Examples
+
+      iex> ExMeal.delete_user("29dbc706-06fe-42d8-860a-390ffb7652a4")
+      {:ok, %ExMeal.Users.User{}}
+
+      iex> ExMeal.delete_user("29dbc706-06fe-42d8-860a-390ffb7652a4")
+      {:error, %ExMeal.Error{result: "User not found!", status: :not_found}}
+
+  """
+  @spec delete_user(Ecto.UUID) ::
+          {:error,
+           %Error{
+             result: String.t() | Ecto.Changeset.t(),
+             status: :not_found | :bad_request
+           }}
+          | {:ok, User.t()}
+  defdelegate delete_user(id),
+    to: DeleteUser,
+    as: :call
 end
