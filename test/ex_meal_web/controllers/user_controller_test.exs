@@ -81,4 +81,32 @@ defmodule ExMealWeb.UserControllerTest do
       assert response == expected_response
     end
   end
+
+  describe "delete/2" do
+    test "When there is a user with the given ID, deletes the user.", %{conn: conn} do
+      %User{id: id} = insert(:user)
+
+      response =
+        conn
+        |> delete(Routes.user_path(conn, :delete, id))
+        |> response(:no_content)
+
+      expected_response = ""
+
+      assert response == expected_response
+    end
+
+    test "When there is no a user with the given ID, returns an error.", %{conn: conn} do
+      id = "1e459e18-5847-4832-8aeb-4c29a869b7be"
+
+      response =
+        conn
+        |> delete(Routes.user_path(conn, :delete, id))
+        |> json_response(:not_found)
+
+      expected_response = %{"message" => "User not found!"}
+
+      assert response == expected_response
+    end
+  end
 end
