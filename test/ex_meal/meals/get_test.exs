@@ -8,7 +8,7 @@ defmodule ExMeal.Meals.GetTest do
   alias ExMeal.Users.User
 
   describe "get/1" do
-    test "when there is an user with the given id, returns the meal from the database." do
+    test "when there is a meal with the given id, returns the meal from the database." do
       %User{} = insert(:user)
 
       %Meal{id: id} = insert(:meal)
@@ -26,7 +26,7 @@ defmodule ExMeal.Meals.GetTest do
               }} = response
     end
 
-    test "when there is no an user with the given id, returns an error." do
+    test "when there is no a meal with the given id, returns an error." do
       response = Get.by_id("1e459e18-5847-4832-8aeb-4c29a869b7be")
 
       assert {:error, %Error{result: "Meal not found!", status: :not_found}} = response

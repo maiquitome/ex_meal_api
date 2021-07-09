@@ -55,7 +55,7 @@ defmodule ExMealTest do
   end
 
   describe "get_meal_by_id/1" do
-    test "when there is an user with the given id, returns the meal from the database." do
+    test "when there is a meal with the given id, returns the meal from the database." do
       %User{} = insert(:user)
 
       %Meal{id: id} = insert(:meal)
@@ -82,7 +82,7 @@ defmodule ExMealTest do
   end
 
   describe "delete_meal/1" do
-    test "When there is a user with the given ID, deletes the user." do
+    test "When there is a meal with the given ID, deletes the meal." do
       %User{} = insert(:user)
 
       %Meal{id: id} = insert(:meal)
@@ -100,7 +100,7 @@ defmodule ExMealTest do
               }} = response
     end
 
-    test "When there is no a user with the given ID, returns an error." do
+    test "When there is no a meal with the given ID, returns an error." do
       response = ExMeal.delete_meal("1e459e18-5847-4832-8aeb-4c29a869b7be")
 
       assert {:error, %Error{result: "Meal not found!", status: :not_found}} = response
@@ -134,7 +134,7 @@ defmodule ExMealTest do
               }} = response
     end
 
-    test "When there is no a user with the given ID, returns an error" do
+    test "When there is no a meal with the given ID, returns an error" do
       id = "1e459e18-5847-4832-8aeb-4c29a869b7be"
 
       params = %{
