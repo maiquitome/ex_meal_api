@@ -8,7 +8,7 @@ defmodule ExMeal.Meals.DeleteTest do
   alias ExMeal.Users.User
 
   describe "call/1" do
-    test "When there is a user with the given ID, deletes the user." do
+    test "When there is a meal with the given ID, deletes the meal." do
       %User{} = insert(:user)
 
       %Meal{id: id} = insert(:meal)
@@ -26,7 +26,7 @@ defmodule ExMeal.Meals.DeleteTest do
               }} = response
     end
 
-    test "When there is no a user with the given ID, returns an error." do
+    test "When there is no a meal with the given ID, returns an error." do
       response = Delete.call("1e459e18-5847-4832-8aeb-4c29a869b7be")
 
       assert {:error, %Error{result: "Meal not found!", status: :not_found}} = response
