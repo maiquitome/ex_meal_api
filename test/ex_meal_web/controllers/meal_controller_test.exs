@@ -51,7 +51,7 @@ defmodule ExMealWeb.MealControllerTest do
   end
 
   describe "show/2" do
-    test "when there is an user with the given id, returns the meal from the database.", %{
+    test "when there is a meal with the given id, returns the meal from the database.", %{
       conn: conn
     } do
       %User{} = insert(:user)
@@ -73,7 +73,7 @@ defmodule ExMealWeb.MealControllerTest do
              } = response
     end
 
-    test "when there is no an user with the given id, returns an error.", %{conn: conn} do
+    test "when there is no a meal with the given id, returns an error.", %{conn: conn} do
       id = "1e459e18-5847-4832-8aeb-4c29a869b7be"
 
       response =
@@ -86,7 +86,7 @@ defmodule ExMealWeb.MealControllerTest do
   end
 
   describe "delete/2" do
-    test "When there is a user with the given ID, deletes the user.", %{conn: conn} do
+    test "When there is a meal with the given ID, deletes the meal.", %{conn: conn} do
       %User{} = insert(:user)
 
       %Meal{id: id} = insert(:meal)
@@ -101,7 +101,7 @@ defmodule ExMealWeb.MealControllerTest do
       assert response == expected_response
     end
 
-    test "When there is no a user with the given ID, returns an error.", %{conn: conn} do
+    test "When there is no a meal with the given ID, returns an error.", %{conn: conn} do
       id = "1e459e18-5847-4832-8aeb-4c29a869b7be"
 
       response =
@@ -116,7 +116,7 @@ defmodule ExMealWeb.MealControllerTest do
   end
 
   describe "update/2" do
-    test "When all params are valid and there is a user with the given ID, updates the user", %{
+    test "When all params are valid and there is a meal with the given ID, updates the meal", %{
       conn: conn
     } do
       %User{} = insert(:user)
@@ -145,7 +145,7 @@ defmodule ExMealWeb.MealControllerTest do
              } = response
     end
 
-    test "When there is no a user with the given ID, returns an error", %{conn: conn} do
+    test "When there is no a meal with the given ID, returns an error", %{conn: conn} do
       id = "1e459e18-5847-4832-8aeb-4c29a869b7be"
 
       params = %{
