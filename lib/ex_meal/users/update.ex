@@ -45,7 +45,7 @@ defmodule ExMeal.Users.Update do
 
       case Repo.update(changeset) do
         {:ok, _schema} = user -> user
-        {:error, changeset} -> Error.build(changeset, :bad_request)
+        {:error, changeset} -> {:error, Error.build(changeset, :bad_request)}
       end
     end
   end
